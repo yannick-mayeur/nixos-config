@@ -232,6 +232,11 @@
       "render"
     ];
 
+  services.jellyseerr = {
+    enable = true;
+    port = 5055;
+  };
+
   services.authelia.instances.main = {
     enable = true;
     secrets.storageEncryptionKeyFile = "/etc/nixos/secrets/authelia/storage_encryption_key";
@@ -243,7 +248,7 @@
         default_policy = "deny";
         rules = [
           { domain = "prowlarr.yannickm.fr"; resources = [ "^/[0-9]?/download([/?].*)?$" ]; policy = "bypass"; }
-          { domain = "*.yannickm.fr"; resources = [ "^/[0-9]?/api([/?].*)?$" ]; policy = "bypass"; }
+          { domain = "*.yannickm.fr"; resources = [ "^(/[0-9])?/api([/?].*)?$" ]; policy = "bypass"; }
           { domain = "*.yannickm.fr"; policy = "one_factor"; }
         ];
       };
@@ -440,6 +445,11 @@
             service = "jellyfin";
             entrypoints = [ "web" "websecure" ];
           };
+          jellyseerr = {
+            rule = "Host(`jellyseerr.yannickm.fr`)";
+            service = "jellyseerr";
+            entrypoints = [ "web" "websecure" ];
+          };
           radarr = {
             rule = "Host(`radarr.yannickm.fr`)";
             service = "radarr";
@@ -474,6 +484,7 @@
           wiki.loadBalancer.servers = [ { url = "http://localhost:3456"; } ];
           torrent.loadBalancer.servers = [ { url = "http://localhost:9091"; } ];
           jellyfin.loadBalancer.servers = [ { url = "http://localhost:8096"; } ];
+          jellyseerr.loadBalancer.servers = [ { url = "http://localhost:5055"; } ];
           radarr.loadBalancer.servers = [ { url = "http://localhost:7878"; } ];
           sonarr.loadBalancer.servers = [ { url = "http://localhost:8989"; } ];
           prowlarr.loadBalancer.servers = [ { url = "http://localhost:9696"; } ];
