@@ -145,6 +145,7 @@
     htop
     bat
     ripgrep
+    zoxide
     fzf
     jq
     wget
