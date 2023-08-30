@@ -536,7 +536,7 @@
         "/home/yannick/immich-app/data/encoded-video" 
         "/home/yannick/immich-app/data/thumbs" 
       ];
-      passwordFile = "/etc/nixos/secrets/restic/server-backup-password";
+      passwordFile = "/etc/nixos/secrets/restic/system-backup-password";
       timerConfig = {
         OnCalendar = "daily";
         Persistent = true;
