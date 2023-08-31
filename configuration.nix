@@ -8,6 +8,11 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      # Include odroid-h3 hardware scan (includes option for hardware accelerated transcoding)
+      "${builtins.fetchGit {
+        url = "https://github.com/yannick-mayeur/nixos-hardware.git";
+        ref = "feat/odroid-h3";
+      }}/hardkernel/odroid-h3"
     ];
 
   powerManagement.cpuFreqGovernor = "performance";
@@ -114,11 +119,6 @@
   };
 
 
-  # Accelerated video playback
-  boot.kernelParams =
-    [ # Enable intel low power encoding
-      "i915.enable_guc=2"
-    ];
   hardware.opengl = {
     enable = true;
     extraPackages = with pkgs; [
