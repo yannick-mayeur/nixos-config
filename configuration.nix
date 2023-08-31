@@ -150,7 +150,6 @@
     jq
     wget
     dig
-    caddy
 
     tailscale # added here to have the tailscale command
   ];
@@ -512,10 +511,7 @@
 
   services.openssh.enable = true;
 
-  services.tailscale = {
-    enable = true;
-    permitCertUid = "caddy";
-  };
+  services.tailscale.enable = true;
 
   services.restic.backups = {
     system-local = {
