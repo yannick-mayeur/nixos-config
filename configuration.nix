@@ -417,11 +417,17 @@
             entrypoints = [ "web" "websecure" ];
             middlewares = [ "authelia" ];
           };
+          torrent-api = {
+            rule = "Host(`torrent.yannickm.fr`) && PathPrefix(`/transmission/rpc`)";
+            service = "torrent";
+            entrypoints = [ "web" "websecure" ];
+            middlewares = [ "authelia-basic" ];
+          };
           torrent = {
             rule = "Host(`torrent.yannickm.fr`)";
             service = "torrent";
             entrypoints = [ "web" "websecure" ];
-            middlewares = [ "authelia-basic" ];
+            middlewares = [ "authelia" ];
           };
           wiki = {
             rule = "Host(`wiki.yannickm.fr`)";
