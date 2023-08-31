@@ -5,17 +5,6 @@
 { config, pkgs, ... }:
 
 {
-  # while waiting for https://github.com/NixOS/nixpkgs/pull/251648
-  nixpkgs.overlays = [
-    (final: prev: {
-      bazarr = prev.bazarr.overrideAttrs (old: {
-        buildInputs = [
-          (prev.python3.withPackages (ps: [ ps.lxml ps.numpy ps.gevent ps.gevent-websocket ps.pillow ps.setuptools ]))
-        ] ++ [ prev.ffmpeg prev.unar ];
-      });
-    })
-  ];
-
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
