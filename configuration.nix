@@ -6,13 +6,9 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      <nixos-hardware/hardkernel/odroid-h3>
       ./hardware-configuration.nix
-      # Include odroid-h3 hardware scan (includes option for hardware accelerated transcoding)
-      "${builtins.fetchGit {
-        url = "https://github.com/yannick-mayeur/nixos-hardware.git";
-        ref = "feat/odroid-h3";
-      }}/hardkernel/odroid-h3"
     ];
 
   powerManagement.cpuFreqGovernor = "performance";
