@@ -411,7 +411,7 @@
             middlewares = [ "authelia" ];
           };
           torrent-api = {
-            rule = "Host(`torrent.yannickm.fr`) && PathPrefix(`/transmission/rpc`)";
+            rule = "Host(`torrent-api.yannickm.fr`)";
             service = "torrent";
             entrypoints = [ "web" "websecure" ];
             middlewares = [ "authelia-basic" ];
