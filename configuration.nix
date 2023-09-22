@@ -32,16 +32,11 @@
 
   networking = {
     hostName = "server";
+    useDHCP = false;
     enableIPv6 = false;
     defaultGateway = "192.168.1.1";
     interfaces = {
       enp1s0 = {
-        ipv4.addresses = [{
-          address = "192.168.1.3";
-          prefixLength = 24;
-        }];
-      };
-      enp2s0 = {
         ipv4.addresses = [{
           address = "192.168.1.3";
           prefixLength = 24;
@@ -175,7 +170,7 @@
       http.address = "0.0.0.0:8080";
       dhcp = {
         enable = true;
-        interface_name = "enp2s0";
+        interface_name = "enp1s0";
         dhcpv4 = {
           gateway_ip = "192.168.1.1";
           subnet_mask = "255.255.255.0";
