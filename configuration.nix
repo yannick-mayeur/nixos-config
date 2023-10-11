@@ -7,7 +7,6 @@
 {
   imports =
     [
-      <nixos-hardware/hardkernel/odroid-h3>
       ./hardware-configuration.nix
     ];
 
@@ -122,6 +121,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    git # Should be kept as it is used by flakes
     htop
     bat
     ripgrep
@@ -199,7 +199,7 @@
       dbtype = "pgsql";
       extraTrustedDomains = [ "localhost" "nextcloud.yannickm.fr" ];
       trustedProxies = [ "localhost" ];
-      adminpassFile = "/etc/nixos/secrets/nextcloud-admin-password";
+      adminpassFile = "/etc/nixos-secrets/nextcloud-admin-password";
     };
   };
   # Nginx is used by nextcloud on port 80 by default. I'm using traefik so I change the default listening port here.
@@ -221,8 +221,8 @@
 
   services.authelia.instances.main = {
     enable = true;
-    secrets.storageEncryptionKeyFile = "/etc/nixos/secrets/authelia/storage_encryption_key";
-    secrets.jwtSecretFile = "/etc/nixos/secrets/authelia/jwt_secret";
+    secrets.storageEncryptionKeyFile = "/etc/nixos-secrets/authelia/storage_encryption_key";
+    secrets.jwtSecretFile = "/etc/nixos-secrets/authelia/jwt_secret";
     settings.server.host = "localhost";
     settings.server.port = 9092;
     settings = {
@@ -275,7 +275,7 @@
         "/mnt/storage/media-server/transmission:/data"
       ];
       ports = [ "9091:9091" ];
-      environmentFiles = [ "/etc/nixos/secrets/media-server_torrent.env" ];
+      environmentFiles = [ "/etc/nixos-secrets/media-server_torrent.env" ];
       extraOptions = [
         "--cap-add=NET_ADMIN"
       ];
@@ -288,7 +288,7 @@
         "/var/lib/librespeed/config:/config"
       ];
       ports = [ "6789:80" ];
-      environmentFiles = [ "/etc/nixos/secrets/librespeed.env" ];
+      environmentFiles = [ "/etc/nixos-secrets/librespeed.env" ];
       environment = {
         PUID = "1000";
         PGID = "100";
@@ -300,7 +300,7 @@
   
   services.traefik = {
     enable = true;
-    environmentFiles = [ "/etc/nixos/secrets/traefik.env" ];
+    environmentFiles = [ "/etc/nixos-secrets/traefik.env" ];
     staticConfigOptions = {
       log.level = "info";
       api.dashboard = true;
@@ -520,7 +520,7 @@
         "/home/yannick/immich-app/data/encoded-video" 
         "/home/yannick/immich-app/data/thumbs" 
       ];
-      passwordFile = "/etc/nixos/secrets/restic/system-backup-password";
+      passwordFile = "/etc/nixos-secrets/restic/system-backup-password";
       timerConfig = {
         OnCalendar = "daily";
         Persistent = true;
@@ -534,6 +534,8 @@
   };
 
   nixpkgs.config.allowUnfree = true;
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
