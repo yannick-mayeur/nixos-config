@@ -3,7 +3,9 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
+let
+  homelab = config.homelab;
+in
 {
   imports =
     [
@@ -13,6 +15,7 @@
       ../../modules/codeserver.nix
       ../../modules/jellyfin.nix
       ../../modules/librespeed.nix
+      ../../modules/minecraft-server.nix
       ../../modules/nextcloud.nix
       ../../modules/tiddlywiki.nix
       ../../modules/traefik.nix
@@ -160,6 +163,8 @@
       };
     };
   };
+
+  homelab.minecraft-server.enable = false;
 
   services.openssh.enable = true;
 
