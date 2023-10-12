@@ -8,6 +8,14 @@
   imports =
     [
       ./hardware-configuration.nix
+      ./modules/adguard.nix
+      ./modules/authelia.nix
+      ./modules/codeserver.nix
+      ./modules/jellyfin.nix
+      ./modules/librespeed.nix
+      ./modules/nextcloud.nix
+      ./modules/tiddlywiki.nix
+      ./modules/traefik.nix
     ];
 
   powerManagement.cpuFreqGovernor = "performance";
@@ -42,6 +50,11 @@
         }];
       };
     };
+    firewall = {
+      enable = true;
+      # 2283/tcp for immich
+      allowedTCPPorts = [ 2283 ];
+    };
   };
 
   time.timeZone = "Europe/Paris";
@@ -70,15 +83,6 @@
   # Configure console keymap
   console.keyMap = "fr";
 
-  programs.zsh = {
-    enable = true;
-    ohMyZsh = {
-      enable = true;
-      theme = "robbyrussell";
-      plugins = [ "git" ];
-    };
-  };
-
   users.groups.martyflix = { };
   users.users.yannick = {
     isNormalUser = true;
@@ -89,26 +93,6 @@
     packages = with pkgs; [];
   };
 
-  nixpkgs.config.permittedInsecurePackages =
-  [ # Used by code server
-    "nodejs-16.20.2"
-  ];
-
-  users.users.code-server = {
-    isNormalUser = true;
-    createHome = true;
-    extraGroups = [ ];
-    shell = pkgs.zsh;
-    packages = with pkgs; [];
-  };
- 
-  services.code-server = {
-    enable = true;
-    host = "localhost";
-    auth = "none";
-  };
-
-
   hardware.opengl = {
     enable = true;
     extraPackages = with pkgs; [
@@ -118,6 +102,11 @@
       vaapiVdpau
       libvdpau-va-gl
     ];
+  };
+
+  virtualisation = {
+    docker.enable = true;
+    oci-containers.backend = "docker";
   };
 
   environment.systemPackages = with pkgs; [
@@ -136,7 +125,14 @@
     tailscale # added here to have the tailscale command
   ];
 
-  virtualisation.docker.enable = true;
+  programs.zsh = {
+    enable = true;
+    ohMyZsh = {
+      enable = true;
+      theme = "robbyrussell";
+      plugins = [ "git" ];
+    };
+  };
 
   programs.git = {
     enable = true;
@@ -163,338 +159,6 @@
         start = [ vim-nix ];
       };
     };
-  };
-
-  services.adguardhome = {
-    enable = true;
-    allowDHCP = true;
-    settings = {
-      http.address = "0.0.0.0:8080";
-      dhcp = {
-        enable = true;
-        interface_name = "enp1s0";
-        dhcpv4 = {
-          gateway_ip = "192.168.1.1";
-          subnet_mask = "255.255.255.0";
-          range_start = "192.168.1.2";
-          range_end = "192.168.1.150";
-        };
-      };
-      tls = {
-        enabled = true;
-        force_https = false;
-        port_https = 0;
-        allow_unencrypted_doh = true;
-      };
-    };
-  };
-
-  services.nextcloud = {
-    enable = true;
-    package = pkgs.nextcloud27;
-    hostName = "localhost";
-    https = true;
-    database.createLocally = true;
-    config = {
-      dbtype = "pgsql";
-      extraTrustedDomains = [ "localhost" "nextcloud.yannickm.fr" ];
-      trustedProxies = [ "localhost" ];
-      adminpassFile = "/etc/nixos-secrets/nextcloud-admin-password";
-    };
-  };
-  # Nginx is used by nextcloud on port 80 by default. I'm using traefik so I change the default listening port here.
-  services.nginx.virtualHosts."localhost".listen = [ { addr = "127.0.0.1"; port = 8081; } ];
-
-  services.jellyfin = {
-    enable = true;
-    group = "martyflix";
-  };
-  users.users.jellyfin.extraGroups =
-    [ # Add render group to be able to write to /dev/dri
-      "render"
-    ];
-
-  services.jellyseerr = {
-    enable = true;
-    port = 5055;
-  };
-
-  services.authelia.instances.main = {
-    enable = true;
-    secrets.storageEncryptionKeyFile = "/etc/nixos-secrets/authelia/storage_encryption_key";
-    secrets.jwtSecretFile = "/etc/nixos-secrets/authelia/jwt_secret";
-    settings.server.host = "localhost";
-    settings.server.port = 9092;
-    settings = {
-      access_control = {
-        default_policy = "deny";
-        rules = [
-          { domain = "prowlarr.yannickm.fr"; resources = [ "^/[0-9]?/download([/?].*)?$" ]; policy = "bypass"; }
-          { domain = "*.yannickm.fr"; resources = [ "^(/[0-9])?/api([/?].*)?$" ]; policy = "bypass"; }
-          { domain = "*.yannickm.fr"; policy = "one_factor"; }
-        ];
-      };
-      session.domain = "yannickm.fr";
-      storage.local.path = "/var/lib/authelia-main/config/db.sqlite3";
-      notifier.filesystem.filename = "/var/lib/authelia-main/config/notification.txt";
-      authentication_backend = {
-        file.path = "/var/lib/authelia-main/config/users_database.yml";
-      };
-    };
-  };
-  
-  services.tiddlywiki = {
-    enable = true;
-    listenOptions.port = 3456;
-  };
-
-  services.prowlarr.enable = true;
-
-  services.radarr = {
-    enable = true;
-    group = "martyflix";
-  };
-
-  services.sonarr = {
-    enable = true;
-    group = "martyflix";
-  };
-
-  services.bazarr = {
-    enable = true;
-    group = "martyflix";
-  };
-
-  virtualisation.oci-containers = {
-    backend = "docker";
-
-    containers."media-server_torrent" = {
-      image = "haugene/transmission-openvpn:5.0.2";
-      volumes = [
-        "/var/lib/media-server_torrent/config:/config"
-        "/mnt/storage/media-server/transmission:/data"
-      ];
-      ports = [ "9091:9091" ];
-      environmentFiles = [ "/etc/nixos-secrets/media-server_torrent.env" ];
-      extraOptions = [
-        "--cap-add=NET_ADMIN"
-      ];
-      autoStart = true;
-    };
-
-    containers."librespeed" = {
-      image = "lscr.io/linuxserver/librespeed:latest";
-      volumes = [
-        "/var/lib/librespeed/config:/config"
-      ];
-      ports = [ "6789:80" ];
-      environmentFiles = [ "/etc/nixos-secrets/librespeed.env" ];
-      environment = {
-        PUID = "1000";
-        PGID = "100";
-        TZ = "Europe/Paris";
-      };
-      autoStart = true;
-    };
-  };
-  
-  services.traefik = {
-    enable = true;
-    environmentFiles = [ "/etc/nixos-secrets/traefik.env" ];
-    staticConfigOptions = {
-      log.level = "info";
-      api.dashboard = true;
-      global = {
-        checknewversion = false;
-        sendanonymoususage = false;
-      };
-      entryPoints = {
-        web = {
-          address = ":80";
-          http.middlewares = [ "https-redirect" ];
-        };
-        websecure = {
-          address = ":443";
-          http.tls = {
-            certResolver = "godaddy";
-            domains = [{ main = "yannickm.fr"; sans = [ "*.yannickm.fr" ]; }];
-          };
-        };
-      };
-      certificatesResolvers = {
-        godaddy = {
-          acme = {
-            email = "yannick.mayeur@proton.me";
-            storage = "${config.services.traefik.dataDir}/acme.json";
-            dnsChallenge = {
-              provider = "godaddy";
-              resolvers = [ "192.168.1.3" ];
-            };
-          };
-        };
-      };
-    };
-    dynamicConfigOptions = {
-      http = {
-        middlewares = {
-          local-only = {
-            ipWhiteList.sourceRange = [ "127.0.0.1/32" "192.168.1.0/24" ];
-          };
-          https-redirect = {
-            redirectScheme = {
-              scheme = "https";
-              permanent = true;
-            };
-          };
-          authelia-basic = {
-            forwardAuth = {
-              address = "http://localhost:9092/api/verify?auth=basic";
-              trustForwardHeader = "true";
-              authResponseHeaders = [
-                "Remote-User"
-                "Remote-Groups"
-                "Remote-Email"
-                "Remote-Name"
-              ];
-            };
-          };
-          authelia = {
-            forwardAuth = {
-              address = "http://localhost:9092/api/verify?rd=https://auth.yannickm.fr/";
-              trustForwardHeader = "true";
-              authResponseHeaders = [
-                "Remote-User"
-                "Remote-Groups"
-                "Remote-Email"
-                "Remote-Name"
-              ];
-            };
-          };
-        };
-        routers = {
-          traefik = {
-            rule = "Host(`traefik.yannickm.fr`)";
-            service = "api@internal";
-            entrypoints = [ "web" "websecure" ];
-            middlewares = [ "local-only" "authelia" ];
-          };
-          authelia = {
-            rule = "Host(`auth.yannickm.fr`)";
-            service = "authelia";
-            entrypoints = [ "web" "websecure" ];
-          };
-          adguard = {
-            rule = "Host(`adguard.yannickm.fr`)";
-            service = "adguard";
-            entrypoints = [ "web" "websecure" ];
-            middlewares = [ "authelia" ];
-          };
-          speed = {
-            rule = "Host(`speed.yannickm.fr`)";
-            service = "speed";
-            entrypoints = [ "web" "websecure" ];
-          };
-          nextcloud = {
-            rule = "Host(`nextcloud.yannickm.fr`)";
-            service = "nextcloud";
-            entrypoints = [ "web" "websecure" ];
-          };
-          immich = {
-            rule = "Host(`immich.yannickm.fr`)";
-            service = "immich";
-            entrypoints = [ "web" "websecure" ];
-          };
-          code = {
-            rule = "Host(`code.yannickm.fr`)";
-            service = "code";
-            entrypoints = [ "web" "websecure" ];
-            middlewares = [ "authelia" ];
-          };
-          torrent-api = {
-            rule = "Host(`torrent-api.yannickm.fr`)";
-            service = "torrent";
-            entrypoints = [ "web" "websecure" ];
-            middlewares = [ "authelia-basic" ];
-          };
-          torrent = {
-            rule = "Host(`torrent.yannickm.fr`)";
-            service = "torrent";
-            entrypoints = [ "web" "websecure" ];
-            middlewares = [ "authelia" ];
-          };
-          wiki = {
-            rule = "Host(`wiki.yannickm.fr`)";
-            service = "wiki";
-            entrypoints = [ "web" "websecure" ];
-            middlewares = [ "authelia" ];
-          };
-          jellyfin = {
-            rule = "Host(`jellyfin.yannickm.fr`)";
-            service = "jellyfin";
-            entrypoints = [ "web" "websecure" ];
-          };
-          jellyseerr = {
-            rule = "Host(`jellyseerr.yannickm.fr`)";
-            service = "jellyseerr";
-            entrypoints = [ "web" "websecure" ];
-          };
-          radarr = {
-            rule = "Host(`radarr.yannickm.fr`)";
-            service = "radarr";
-            entrypoints = [ "web" "websecure" ];
-            middlewares = [ "authelia" ];
-          };
-          sonarr = {
-            rule = "Host(`sonarr.yannickm.fr`)";
-            service = "sonarr";
-            entrypoints = [ "web" "websecure" ];
-          };
-          prowlarr = {
-            rule = "Host(`prowlarr.yannickm.fr`)";
-            service = "prowlarr";
-            entrypoints = [ "web" "websecure" ];
-            middlewares = [ "authelia" ];
-          };
-          bazarr = {
-            rule = "Host(`bazarr.yannickm.fr`)";
-            service = "bazarr";
-            entrypoints = [ "web" "websecure" ];
-            middlewares = [ "authelia" ];
-          };
-        };
-        services = {
-          authelia.loadBalancer.servers = [ { url = "http://localhost:9092"; } ];
-          adguard.loadBalancer.servers = [ { url = "http://localhost:8080"; } ];
-          speed.loadBalancer.servers = [ { url = "http://localhost:6789"; } ];
-          nextcloud.loadBalancer.servers = [ { url = "http://localhost:8081"; } ];
-          immich.loadBalancer.servers = [ { url = "http://localhost:2283"; } ];
-          code.loadBalancer.servers = [ { url = "http://localhost:4444"; } ];
-          wiki.loadBalancer.servers = [ { url = "http://localhost:3456"; } ];
-          torrent.loadBalancer.servers = [ { url = "http://localhost:9091"; } ];
-          jellyfin.loadBalancer.servers = [ { url = "http://localhost:8096"; } ];
-          jellyseerr.loadBalancer.servers = [ { url = "http://localhost:5055"; } ];
-          radarr.loadBalancer.servers = [ { url = "http://localhost:7878"; } ];
-          sonarr.loadBalancer.servers = [ { url = "http://localhost:8989"; } ];
-          prowlarr.loadBalancer.servers = [ { url = "http://localhost:9696"; } ];
-          bazarr.loadBalancer.servers = [ { url = "http://localhost:6767"; } ];
-        };
-      };
-    };
-  };
-
-  networking.firewall = {
-    enable = true;
-    # Adguard ports from https://github.com/AdguardTeam/AdGuardHome/wiki/Docker
-    # 80/tcp for http traffic
-    # 443/tcp for https traffic
-    # 2283/tcp for immich
-    #
-    # jellyfin
-    # from https://jellyfin.org/docs/general/networking/index.html
-    # 1900/udp jellyfin service auto-discovery
-    # 7359/udp jellyfin service auto-discovery
-    allowedTCPPorts = [ 53 68 80 443 853 2283];
-    allowedUDPPorts = [ 53 67 68 443 853 1900 7359 ];
   };
 
   services.openssh.enable = true;
@@ -544,5 +208,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
-
 }
