@@ -8,14 +8,14 @@
   imports =
     [
       ./hardware-configuration.nix
-      ./modules/adguard.nix
-      ./modules/authelia.nix
-      ./modules/codeserver.nix
-      ./modules/jellyfin.nix
-      ./modules/librespeed.nix
-      ./modules/nextcloud.nix
-      ./modules/tiddlywiki.nix
-      ./modules/traefik.nix
+      ../../modules/adguard.nix
+      ../../modules/authelia.nix
+      ../../modules/codeserver.nix
+      ../../modules/jellyfin.nix
+      ../../modules/librespeed.nix
+      ../../modules/nextcloud.nix
+      ../../modules/tiddlywiki.nix
+      ../../modules/traefik.nix
     ];
 
   powerManagement.cpuFreqGovernor = "performance";

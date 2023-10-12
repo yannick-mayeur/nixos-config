@@ -12,7 +12,7 @@
         system = "x86_64-linux";
 
         modules = [
-          ./configuration.nix
+          ./hosts/server/default.nix
           nixos-hardware.nixosModules.hardkernel-odroid-h3
         ];
       };
