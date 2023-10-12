@@ -128,14 +128,7 @@ in
     tailscale # added here to have the tailscale command
   ];
 
-  programs.zsh = {
-    enable = true;
-    ohMyZsh = {
-      enable = true;
-      theme = "robbyrussell";
-      plugins = [ "git" ];
-    };
-  };
+  programs.zsh.enable = true;
 
   programs.git = {
     enable = true;
