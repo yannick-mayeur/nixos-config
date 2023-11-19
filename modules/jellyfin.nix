@@ -33,6 +33,11 @@
   };
 
   virtualisation.oci-containers = {
+    containers."flaresolverr" = {
+      image = "flaresolverr/flaresolverr";
+      ports = [ "8191:8191" ];
+      autoStart = true;
+    };
     containers."media-server_torrent" = {
       image = "haugene/transmission-openvpn:5.0.2";
       volumes = [
@@ -95,6 +100,12 @@
         entrypoints = [ "web" "websecure" ];
         middlewares = [ "authelia" ];
       };
+      flaresolverr = {
+        rule = "Host(`flaresolverr.yannickm.fr`)";
+        service = "flaresolverr";
+        entrypoints = [ "web" "websecure" ];
+        middlewares = [ "local-only" ];
+      };
     };
     services = {
       jellyfin.loadBalancer.servers = [ { url = "http://localhost:8096"; } ];
@@ -104,6 +115,7 @@
       prowlarr.loadBalancer.servers = [ { url = "http://localhost:9696"; } ];
       bazarr.loadBalancer.servers = [ { url = "http://localhost:6767"; } ];
       torrent.loadBalancer.servers = [ { url = "http://localhost:9091"; } ];
+      flaresolverr.loadBalancer.servers = [ { url = "http://localhost:8191"; } ];
     };
   };
 
