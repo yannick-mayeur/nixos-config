@@ -3,6 +3,7 @@
 {
   services.traefik = {
     enable = true;
+    # Don't forget to set "LEGO_DISABLE_CNAME_SUPPORT=true"
     environmentFiles = [ "/etc/nixos-secrets/traefik.env" ];
     staticConfigOptions = {
       log.level = "info";
@@ -31,7 +32,7 @@
             storage = "${config.services.traefik.dataDir}/acme.json";
             dnsChallenge = {
               provider = "godaddy";
-              resolvers = [ "192.168.1.3" ];
+              resolvers = [ "1.1.1.1:53" "8.8.8.8:53" ];
             };
           };
         };
