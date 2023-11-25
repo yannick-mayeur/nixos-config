@@ -14,10 +14,12 @@
     packages = with pkgs; [];
   };
 
-  services.code-server = {
+  services.openvscode-server = {
     enable = true;
     host = "localhost";
-    auth = "none";
+    port = 4444;
+    user = "code-server";
+    withoutConnectionToken = true;
   };
 
   services.traefik.dynamicConfigOptions.http = {
