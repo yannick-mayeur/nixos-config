@@ -19,7 +19,6 @@
   # environment.
   home.packages = with pkgs; [
     comma
-    # yazi
     htop
     lsd
     zoxide

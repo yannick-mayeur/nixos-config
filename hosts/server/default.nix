@@ -122,7 +122,6 @@ in
     jq
     wget
     dig
-    yazi
     openai-whisper
 
     tailscale # added here to have the tailscale command
