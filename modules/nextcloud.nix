@@ -4,7 +4,7 @@
 {
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud27;
+    package = pkgs.nextcloud28;
     hostName = "localhost";
     https = true;
     database.createLocally = true;
@@ -15,6 +15,14 @@
       trustedProxies = [ "localhost" ];
       adminpassFile = "/etc/nixos-secrets/nextcloud-admin-password";
     };
+
+    autoUpdateApps.enable = true;
+    extraAppsEnable = true;
+    extraApps = with config.services.nextcloud.package.packages.apps; {
+        inherit contacts notes cookbook ;
+        };
+
+    phpOptions."opcache.interned_strings_buffer" = "16";
   };
 
   # Nginx is used by nextcloud on port 80 by default.
