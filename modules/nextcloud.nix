@@ -8,6 +8,7 @@
     hostName = "localhost";
     https = true;
     database.createLocally = true;
+    configureRedis = true;
     config = {
       dbtype = "pgsql";
       extraTrustedDomains = [ "localhost" "nextcloud.yannickm.fr" ];
