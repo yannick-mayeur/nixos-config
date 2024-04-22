@@ -39,7 +39,7 @@
       autoStart = true;
     };
     containers."media-server_torrent" = {
-      image = "haugene/transmission-openvpn:5.0.2";
+      image = "haugene/transmission-openvpn";
       volumes = [
         "/var/lib/media-server_torrent/config:/config"
         "/mnt/storage/media-server/transmission:/data"
