@@ -67,7 +67,7 @@
   programs.neovim = {
     enable = true;
     vimAlias = true;
-    extraConfig = builtins.readFile ./vim/extraConfig.vim;
+    extraConfig = builtins.readFile ./common/vim/extraConfig.vim;
     plugins = with pkgs.vimPlugins; [
       vim-sensible
 

@@ -21,7 +21,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.yannick = import ./home/default.nix;
+            home-manager.users.yannick = import ./home/desktop/default.nix;
           }
         ];
       };
@@ -35,7 +35,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.yannick = import ./home/default.nix;
+            home-manager.users.yannick = import ./home/server/default.nix;
           }
         ];
       };
