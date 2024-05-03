@@ -1,3 +1,5 @@
+{ harpoon, ... }:
+
 {
   imports = [
     ../.

@@ -1,16 +1,21 @@
 {
   description = "Yannick's NixOS Flake";
 
-  inputs = {
+inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs"; 
+
+    harpoon = {
+      url = "github:ThePrimeagen/harpoon/harpoon2";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, harpoon, ... }@inputs: {
     nixosConfigurations = {
       "desktop-nixos" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -22,6 +27,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.yannick = import ./home/desktop/default.nix;
+            home-manager.extraSpecialArgs = { inherit harpoon; };
           }
         ];
       };
@@ -36,6 +42,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.yannick = import ./home/server/default.nix;
+            home-manager.extraSpecialArgs = { inherit harpoon; };
           }
         ];
       };

@@ -1,5 +1,22 @@
 {
   "nodes": {
+    "harpoon": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1712688075,
+        "narHash": "sha256-FZQH38E02HuRPIPAog/nWM55FuBxKp8AyrEldFkoLYk=",
+        "owner": "ThePrimeagen",
+        "repo": "harpoon",
+        "rev": "0378a6c428a0bed6a2781d459d7943843f374bce",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ThePrimeagen",
+        "ref": "harpoon2",
+        "repo": "harpoon",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -23,11 +40,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1714465198,
-        "narHash": "sha256-ySkEJvS0gPz2UhXm0H3P181T8fUxvDVcoUyGn0Kc5AI=",
+        "lastModified": 1714746424,
+        "narHash": "sha256-Jdyw7VcM+jQ0uSXgjFj8UdXZ229yOvPNlYkKyKyHA4s=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "68d680c1b7c0e67a9b2144d6776583ee83664ef4",
+        "rev": "3f017311191fe6d501ca2496a835d012f656ee9c",
         "type": "github"
       },
       "original": {
@@ -55,6 +72,7 @@
     },
     "root": {
       "inputs": {
+        "harpoon": "harpoon",
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs"
