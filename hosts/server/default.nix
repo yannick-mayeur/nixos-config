@@ -40,6 +40,12 @@ in
     "Z /mnt/storage/media-server 0770 - martyflix - -"
   ];
 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
   networking = {
     hostName = "server";
     useDHCP = false;
