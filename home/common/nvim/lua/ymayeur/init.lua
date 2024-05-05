@@ -1,0 +1,11 @@
+require('ymayeur.options')
+require('ymayeur.keymap')
+
+require('ymayeur.configs.tokyonight')
+require('ymayeur.configs.lualine')
+require('ymayeur.configs.harpoon')
+require('ymayeur.configs.telescope')
+require('ymayeur.configs.treesitter')
+require('ymayeur.configs.comment')
+require('ymayeur.configs.lsp')
+require('ymayeur.configs.conform')
