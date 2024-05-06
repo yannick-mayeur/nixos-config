@@ -23,7 +23,7 @@
     postgresql_16
     yarn
     nodejs_18
-    ruby_3_2
+    unstable.ruby_3_2
   ];
 
   programs.zsh.initExtra = lib.mkForce ''

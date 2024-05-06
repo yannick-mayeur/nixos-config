@@ -23,6 +23,7 @@ in
     fzf
     delta
     silver-searcher
+    tmux
   ];
 
   programs.zsh = {

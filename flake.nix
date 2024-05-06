@@ -20,15 +20,21 @@ inputs = {
   };
 
   outputs = {
-      self,
-      nixpkgs,
-      nixpkgs-unstable,
-      nixos-hardware,
-      home-manager,
-      home-manager-unstable,
-      harpoon,
-      ...
-  }@inputs: {
+    self,
+    nixpkgs,
+    nixpkgs-unstable,
+    nixos-hardware,
+    home-manager,
+    home-manager-unstable,
+    harpoon,
+    ...
+  }@inputs:
+  let
+    overlay-unstable = final: prev: {
+      unstable = nixpkgs-unstable.legacyPackages.${prev.system};
+    };
+  in
+  {
     nixosConfigurations = {
       "desktop-nixos" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -61,12 +67,15 @@ inputs = {
       };
     };
 
-    homeConfigurations."yannickmayeur@ymacbook.local" = home-manager-unstable.lib.homeManagerConfiguration {
-      pkgs = nixpkgs-unstable.legacyPackages.aarch64-darwin;
+    homeConfigurations."yannickmayeur@ymacbook.local" = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages.aarch64-darwin;
 
       # Specify your home configuration modules here, for example,
       # the path to your home.nix.
-      modules = [ ./home/work-macbook/default.nix ];
+      modules = [
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+          ./home/work-macbook/default.nix
+      ];
 
       # Optionally use extraSpecialArgs
       # to pass through arguments to home.nix
