@@ -66,6 +66,7 @@ in
       nvim-treesitter.withAllGrammars
       comment-nvim
       nvim-surround
+      vim-matchup
 
       lsp-zero-nvim
       nvim-lspconfig
