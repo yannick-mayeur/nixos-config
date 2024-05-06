@@ -8,6 +8,8 @@ vim.opt.expandtab = true
 
 vim.opt.smartindent = true
 
+vim.cmd('filetype plugin indent on')
+
 vim.opt.wrap = false
 
 vim.opt.swapfile = false
