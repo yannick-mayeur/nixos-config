@@ -6,7 +6,8 @@
     group = "martyflix";
   };
   users.users.jellyfin.extraGroups =
-    [ # Add render group to be able to write to /dev/dri
+    [
+      # Add render group to be able to write to /dev/dri
       "render"
     ];
 
@@ -108,14 +109,14 @@
       };
     };
     services = {
-      jellyfin.loadBalancer.servers = [ { url = "http://localhost:8096"; } ];
-      jellyseerr.loadBalancer.servers = [ { url = "http://localhost:5055"; } ];
-      radarr.loadBalancer.servers = [ { url = "http://localhost:7878"; } ];
-      sonarr.loadBalancer.servers = [ { url = "http://localhost:8989"; } ];
-      prowlarr.loadBalancer.servers = [ { url = "http://localhost:9696"; } ];
-      bazarr.loadBalancer.servers = [ { url = "http://localhost:6767"; } ];
-      torrent.loadBalancer.servers = [ { url = "http://localhost:9091"; } ];
-      flaresolverr.loadBalancer.servers = [ { url = "http://localhost:8191"; } ];
+      jellyfin.loadBalancer.servers = [{ url = "http://localhost:8096"; }];
+      jellyseerr.loadBalancer.servers = [{ url = "http://localhost:5055"; }];
+      radarr.loadBalancer.servers = [{ url = "http://localhost:7878"; }];
+      sonarr.loadBalancer.servers = [{ url = "http://localhost:8989"; }];
+      prowlarr.loadBalancer.servers = [{ url = "http://localhost:9696"; }];
+      bazarr.loadBalancer.servers = [{ url = "http://localhost:6767"; }];
+      torrent.loadBalancer.servers = [{ url = "http://localhost:9091"; }];
+      flaresolverr.loadBalancer.servers = [{ url = "http://localhost:8191"; }];
     };
   };
 

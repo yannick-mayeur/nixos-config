@@ -28,17 +28,19 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
 
   fileSystems."/mnt/storage" =
-    { device = "/dev/disk/by-uuid/a2c97b53-e421-4db7-a424-c57356e1e14c";
+    {
+      device = "/dev/disk/by-uuid/a2c97b53-e421-4db7-a424-c57356e1e14c";
       fsType = "ext4";
     };
 
   systemd.tmpfiles.rules =
-  [ # Set the permissions and the martyflix group to folders used by *arr apps
-    "d /mnt/storage/media-server 0770 - martyflix - -"
-    "d /mnt/storage/media-server/media/movies 0770 - martyflix - -"
-    "d /mnt/storage/media-server/media/tv_shows 0770 - martyflix - -"
-    "Z /mnt/storage/media-server 0770 - martyflix - -"
-  ];
+    [
+      # Set the permissions and the martyflix group to folders used by *arr apps
+      "d /mnt/storage/media-server 0770 - martyflix - -"
+      "d /mnt/storage/media-server/media/movies 0770 - martyflix - -"
+      "d /mnt/storage/media-server/media/tv_shows 0770 - martyflix - -"
+      "Z /mnt/storage/media-server 0770 - martyflix - -"
+    ];
 
   nix.gc = {
     automatic = true;
@@ -99,7 +101,7 @@ in
     extraGroups = [ "networkmanager" "wheel" "martyflix" ];
     shell = pkgs.zsh;
     useDefaultShell = true;
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
   };
 
   hardware.opengl = {
@@ -184,8 +186,8 @@ in
         "/var/lib"
       ];
       exclude = [
-        "/home/yannick/immich-app/data/encoded-video" 
-        "/home/yannick/immich-app/data/thumbs" 
+        "/home/yannick/immich-app/data/encoded-video"
+        "/home/yannick/immich-app/data/thumbs"
       ];
       passwordFile = "/etc/nixos-secrets/restic/system-backup-password";
       timerConfig = {

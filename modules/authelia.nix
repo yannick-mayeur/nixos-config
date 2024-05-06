@@ -1,4 +1,3 @@
-
 { config, pkgs, ... }:
 
 {
@@ -45,10 +44,10 @@
           address = "http://localhost:9092/api/verify?rd=https://auth.yannickm.fr/";
           trustForwardHeader = "true";
           authResponseHeaders = [
-          "Remote-User"
-          "Remote-Groups"
-          "Remote-Email"
-          "Remote-Name"
+            "Remote-User"
+            "Remote-Groups"
+            "Remote-Email"
+            "Remote-Name"
           ];
         };
       };
@@ -61,7 +60,7 @@
       };
     };
     services = {
-      authelia.loadBalancer.servers = [ { url = "http://localhost:9092"; } ];
+      authelia.loadBalancer.servers = [{ url = "http://localhost:9092"; }];
     };
   };
 }

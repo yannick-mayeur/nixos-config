@@ -1,4 +1,3 @@
-
 { config, pkgs, ... }:
 
 {
@@ -17,7 +16,7 @@
       };
     };
     services = {
-      wiki.loadBalancer.servers = [ { url = "http://localhost:3456"; } ];
+      wiki.loadBalancer.servers = [{ url = "http://localhost:3456"; }];
     };
   };
 }

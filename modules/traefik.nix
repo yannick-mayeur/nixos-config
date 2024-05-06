@@ -65,7 +65,7 @@
           };
         };
         services = {
-          immich.loadBalancer.servers = [ { url = "http://localhost:2283"; } ];
+          immich.loadBalancer.servers = [{ url = "http://localhost:2283"; }];
         };
       };
     };

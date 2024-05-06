@@ -1,8 +1,9 @@
 { config, pkgs, lib, ... }:
-with lib;                      
+with lib;
 let
   cfg = config.homelab.minecraft-server;
-in {
+in
+{
   options.homelab.minecraft-server = {
     enable = mkEnableOption "hello service";
   };

@@ -35,7 +35,7 @@
       };
     };
     services = {
-      adguard.loadBalancer.servers = [ { url = "http://localhost:8080"; } ];
+      adguard.loadBalancer.servers = [{ url = "http://localhost:8080"; }];
     };
   };
 

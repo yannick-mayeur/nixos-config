@@ -24,6 +24,7 @@ in
     delta
     silver-searcher
     tmux
+    nixpkgs-fmt
   ];
 
   programs.zsh = {

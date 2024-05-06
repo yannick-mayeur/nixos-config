@@ -2,16 +2,17 @@
 
 {
   nixpkgs.config.permittedInsecurePackages =
-    [ # Used by code server
-    "nodejs-16.20.2"
-  ];
+    [
+      # Used by code server
+      "nodejs-16.20.2"
+    ];
 
   users.users.code-server = {
     isNormalUser = true;
     createHome = true;
     extraGroups = [ ];
     shell = pkgs.zsh;
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
   };
 
   services.openvscode-server = {
@@ -32,7 +33,7 @@
       };
     };
     services = {
-      code.loadBalancer.servers = [ { url = "http://localhost:4444"; } ];
+      code.loadBalancer.servers = [{ url = "http://localhost:4444"; }];
     };
   };
 }

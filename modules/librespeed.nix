@@ -27,7 +27,7 @@
       };
     };
     services = {
-      speed.loadBalancer.servers = [ { url = "http://localhost:6789"; } ];
+      speed.loadBalancer.servers = [{ url = "http://localhost:6789"; }];
     };
   };
 }
