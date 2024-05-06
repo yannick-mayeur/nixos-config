@@ -25,8 +25,12 @@ require('lspconfig').eslint.setup({
     end,
 })
 require('lspconfig').lua_ls.setup({})
-require('lspconfig').solargraph.setup({})
-require('lspconfig').rubocop.setup({})
+require('lspconfig').solargraph.setup({
+    cmd = { 'bundle', 'exec', 'solargraph', 'stdio' }
+})
+require('lspconfig').rubocop.setup({
+    cmd = { 'bundle', 'exec', 'rubocop', '--lsp' }
+})
 
 local cmp = require('cmp')
 local _ = require('lsp-zero').cmp_action()
@@ -44,4 +48,3 @@ cmp.setup({
         ['<C-d>'] = cmp.mapping.scroll_docs(4),
     }),
 })
-
