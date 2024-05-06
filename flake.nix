@@ -3,11 +3,15 @@
 
 inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs"; 
+
+    home-manager-unstable.url = "github:nix-community/home-manager";
+    home-manager-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable"; 
 
     harpoon = {
       url = "github:ThePrimeagen/harpoon/harpoon2";
@@ -15,7 +19,16 @@ inputs = {
     };
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, harpoon, ... }@inputs: {
+  outputs = {
+      self,
+      nixpkgs,
+      nixpkgs-unstable,
+      nixos-hardware,
+      home-manager,
+      home-manager-unstable,
+      harpoon,
+      ...
+  }@inputs: {
     nixosConfigurations = {
       "desktop-nixos" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -48,8 +61,8 @@ inputs = {
       };
     };
 
-    homeConfigurations."yannickmayeur@ymacbook.local" = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+    homeConfigurations."yannickmayeur@ymacbook.local" = home-manager-unstable.lib.homeManagerConfiguration {
+      pkgs = nixpkgs-unstable.legacyPackages.aarch64-darwin;
 
       # Specify your home configuration modules here, for example,
       # the path to your home.nix.
