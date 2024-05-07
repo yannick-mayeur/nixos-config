@@ -65,15 +65,23 @@ in
     plugins = with pkgs.vimPlugins; [
       tokyonight-nvim
 
+      nvim-cmp
+
       nvim-treesitter.withAllGrammars
       comment-nvim
       nvim-surround
       vim-matchup
 
       lsp-zero-nvim
+      lspkind-nvim
       nvim-lspconfig
-      nvim-cmp
+
       cmp-nvim-lsp
+      luasnip
+
+      copilot-lua
+      copilot-cmp
+
       conform-nvim
 
       lualine-nvim
