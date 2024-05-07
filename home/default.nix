@@ -24,6 +24,7 @@ in
     delta
     silver-searcher
     tmux
+    tmuxinator
     nixpkgs-fmt
   ];
 
@@ -101,8 +102,8 @@ in
     extraPackages = with pkgs; [
       nodePackages.typescript
       nodePackages.typescript-language-server
-      rubyPackages_3_2.solargraph
-      rubyPackages_3_2.rubocop
+      unstable.rubyPackages_3_2.solargraph
+      unstable.rubyPackages_3_2.rubocop
       vscode-langservers-extracted
       lua-language-server
       tree-sitter
