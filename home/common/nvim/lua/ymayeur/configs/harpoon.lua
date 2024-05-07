@@ -4,9 +4,9 @@ local harpoon = require('harpoon')
 harpoon:setup()
 -- REQUIRED
 
-vim.keymap.set('n', '<leader>di', function() harpoon:list():add() end)
-vim.keymap.set('n', '<leader>do', function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
-vim.keymap.set('n', '<leader>du', function() harpoon:list():clear() end)
+vim.keymap.set('n', '<leader>dj', function() harpoon:list():add() end)
+vim.keymap.set('n', '<leader>dk', function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+vim.keymap.set('n', '<leader>dl', function() harpoon:list():clear() end)
 
 vim.keymap.set('n', '<leader>dy', function() harpoon:list():select(1) end)
 vim.keymap.set('n', '<leader>du', function() harpoon:list():select(2) end)
