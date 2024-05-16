@@ -17,6 +17,7 @@ in
     zoxide
     bat
     ripgrep
+    fd
     jq
     gh
     thefuck
