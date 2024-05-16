@@ -16,23 +16,12 @@ lsp_zero.format_on_save({
 })
 
 require('lspconfig').tsserver.setup({})
-require('lspconfig').eslint.setup({
-  on_attach = function(client, bufnr)
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      buffer = bufnr,
-      command = "EslintFixAll",
-    })
-  end,
-})
+require('lspconfig').eslint.setup({})
 require('lspconfig').lua_ls.setup({})
 
--- Configure solargraph with lspconfig
--- we say
 require('lspconfig').solargraph.setup({
   cmd = { 'bundle', 'exec', 'solargraph', 'stdio' }
 })
--- Configure rubocop with lspconfig
--- we say we want to use the rubocop provided by bundle
 require('lspconfig').rubocop.setup({
   cmd = { 'bundle', 'exec', 'rubocop', '--lsp' }
 })
@@ -59,12 +48,6 @@ local cmp = require('cmp')
 
 require('copilot_cmp').setup()
 
-local has_words_before = function()
-  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
-end
-
 cmp.setup({
   sources = {
     { name = 'copilot',  group_index = 2 },
@@ -86,14 +69,6 @@ cmp.setup({
   mapping = cmp.mapping.preset.insert({
     -- `Enter` key to confirm completion
     ['<CR>'] = cmp.mapping.confirm({ select = false }),
-
-    ["<Tab>"] = vim.schedule_wrap(function(fallback)
-      if cmp.visible() and has_words_before() then
-        cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-      else
-        fallback()
-      end
-    end),
 
     -- Ctrl+Space to trigger completion menu
     ['<C-Space>'] = cmp.mapping.complete(),

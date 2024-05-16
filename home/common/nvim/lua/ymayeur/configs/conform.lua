@@ -1,8 +1,8 @@
 require("conform").setup({
   formatters_by_ft = {
-    javascript = { "prettier" },
-    typescript = { "prettier" },
-    typescriptreact = { "prettier" },
+    javascript = { "prettier", "eslint_d" },
+    typescript = { "prettier", "eslint_d" },
+    typescriptreact = { "prettier", "eslint_d" },
     nix = { "nixpkgs_fmt" },
   },
   format_on_save = {
