@@ -24,6 +24,7 @@ in
     delta
     silver-searcher
     nixpkgs-fmt
+    unstable.ruby_3_2
   ];
 
   programs.tmux = {
