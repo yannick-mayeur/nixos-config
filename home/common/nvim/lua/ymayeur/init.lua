@@ -1,7 +1,7 @@
 require('ymayeur.options')
 require('ymayeur.keymap')
 
-require('ymayeur.configs.tokyonight')
+require('ymayeur.configs.colorscheme')
 require('ymayeur.configs.lualine')
 require('ymayeur.configs.harpoon')
 require('ymayeur.configs.telescope')

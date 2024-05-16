@@ -104,6 +104,7 @@ in
     vimAlias = true;
     plugins = with pkgs.vimPlugins; [
       tokyonight-nvim
+      catppuccin-nvim
 
       nvim-cmp
 
