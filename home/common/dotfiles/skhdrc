@@ -20,27 +20,29 @@ lalt - t : yabai -m window --toggle float
 lalt - u : yabai -m window --insert south
 lalt - i : yabai -m window --insert east
 
-lalt - 0x12 : yabai -m space --focus 1
-lalt - 0x13 : yabai -m space --focus 2
-lalt - 0x14 : yabai -m space --focus 3
-lalt - 0x15 : yabai -m space --focus 4
-lalt - 0x17 : yabai -m space --focus 5
-lalt - 0x16 : yabai -m space --focus 6
-lalt - 0x1A : yabai -m space --focus 7
-lalt - 0x1C : yabai -m space --focus 8
-lalt - 0x19 : yabai -m space --focus 9
-lalt - 0x1D : yabai -m space --focus 10
+lalt - x : yabai -m space --focus recent
 
-shift + lalt - 0x12 : yabai -m window --space 1
-shift + lalt - 0x13 : yabai -m window --space 2
-shift + lalt - 0x14 : yabai -m window --space 3
-shift + lalt - 0x15 : yabai -m window --space 4
-shift + lalt - 0x17 : yabai -m window --space 5
-shift + lalt - 0x16 : yabai -m window --space 6
-shift + lalt - 0x1A : yabai -m window --space 7
-shift + lalt - 0x1C : yabai -m window --space 8
-shift + lalt - 0x19 : yabai -m window --space 9
-shift + lalt - 0x1D : yabai -m window --space 10
+shift + lalt - 0x12 : yabai -m space --focus 1
+shift + lalt - 0x13 : yabai -m space --focus 2
+shift + lalt - 0x14 : yabai -m space --focus 3
+shift + lalt - 0x15 : yabai -m space --focus 4
+shift + lalt - 0x17 : yabai -m space --focus 5
+shift + lalt - 0x16 : yabai -m space --focus 6
+shift + lalt - 0x1A : yabai -m space --focus 7
+shift + lalt - 0x1C : yabai -m space --focus 8
+shift + lalt - 0x19 : yabai -m space --focus 9
+shift + lalt - 0x1D : yabai -m space --focus 10
+
+lctrl + shift + lalt - 0x12 : yabai -m window --space 1
+lctrl + shift + lalt - 0x13 : yabai -m window --space 2
+lctrl + shift + lalt - 0x14 : yabai -m window --space 3
+lctrl + shift + lalt - 0x15 : yabai -m window --space 4
+lctrl + shift + lalt - 0x17 : yabai -m window --space 5
+lctrl + shift + lalt - 0x16 : yabai -m window --space 6
+lctrl + shift + lalt - 0x1A : yabai -m window --space 7
+lctrl + shift + lalt - 0x1C : yabai -m window --space 8
+lctrl + shift + lalt - 0x19 : yabai -m window --space 9
+lctrl + shift + lalt - 0x1D : yabai -m window --space 10
 
 # Resize windows
 lctrl + lalt - h : \
