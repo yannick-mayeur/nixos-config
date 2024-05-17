@@ -1,4 +1,4 @@
-{ config, pkgs, harpoon, ... }:
+{ config, pkgs, harpoon, bat-catppuccin, ... }:
 
 let
   harpoon2 = pkgs.vimUtils.buildVimPlugin {
@@ -28,6 +28,19 @@ in
     unstable.ruby_3_2
   ];
 
+  programs.bat = {
+    enable = true;
+    config = {
+      theme = "catppuccin";
+    };
+    themes = {
+      catppuccin = {
+        src = bat-catppuccin;
+        file = "themes/Catppuccin Frappe.tmTheme";
+      };
+    };
+  };
+
   programs.tmux = {
     enable = true;
     escapeTime = 10;
@@ -42,7 +55,7 @@ in
     '';
     plugins = with pkgs; [
       {
-        plugin = tmuxPlugins.catppuccin;
+        plugin = tmux-catppuccin.tmuxPlugins.catppuccin;
         extraConfig = ''
           set -g @catppuccin_flavour 'frappe'
 
@@ -56,7 +69,7 @@ in
           set -g @catppuccin_window_default_text "#W"
           set -g @catppuccin_window_current_text "#W"
 
-          set -g @catppuccin_status_modules "directory date_time"
+          set -g @catppuccin_status_modules_right "directory date_time"
           set -g @catppuccin_status_left_separator  " "
           set -g @catppuccin_status_right_separator ""
           set -g @catppuccin_status_fill "icon"

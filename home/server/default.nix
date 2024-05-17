@@ -1,4 +1,4 @@
-{ lib, harpoon, ... }:
+{ lib, harpoon, bat-catppuccin, ... }:
 
 {
   imports = [
