@@ -14,16 +14,7 @@
     userEmail = lib.mkForce "ymayeur@sweep.net";
   };
 
-  home.packages = with pkgs; [
-    shellcheck
-    awscli2
-    brotli
-    terraform
-
-    postgresql_16
-    yarn
-    nodejs_18
-  ];
+  home.packages = with pkgs; [ ];
 
   programs.zsh.initExtra = lib.mkForce ''
     alias ls='lsd'

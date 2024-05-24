@@ -164,8 +164,8 @@ in
       nodejs_21
       nodePackages.typescript
       nodePackages.typescript-language-server
-      unstable.rubyPackages_3_2.solargraph
-      unstable.rubyPackages_3_2.rubocop
+      rubyPackages_3_2.solargraph
+      rubyPackages_3_2.rubocop
       vscode-langservers-extracted
       lua-language-server
       tree-sitter
