@@ -20,10 +20,10 @@ require('lspconfig').eslint.setup({})
 require('lspconfig').lua_ls.setup({})
 
 require('lspconfig').solargraph.setup({
-  cmd = { 'bundle', 'exec', 'solargraph', 'stdio' }
+  -- cmd = { 'bundle', 'exec', 'solargraph', 'stdio' }
 })
 require('lspconfig').rubocop.setup({
-  cmd = { 'bundle', 'exec', 'rubocop', '--lsp' }
+  -- cmd = { 'bundle', 'exec', 'rubocop', '--lsp' }
 })
 
 require('copilot').setup({
