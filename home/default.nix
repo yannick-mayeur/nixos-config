@@ -25,8 +25,14 @@ in
     delta
     silver-searcher
     nixpkgs-fmt
-    unstable.ruby_3_2
   ];
+
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+    nix-direnv.enable = true;
+  };
 
   programs.bat = {
     enable = true;
@@ -86,6 +92,7 @@ in
     initExtra = ''
       alias ls='lsd'
 
+      eval "$(${lib.getExe pkgs.direnv} hook zsh)"
       eval "$(zoxide init zsh)"
     '';
     oh-my-zsh = {

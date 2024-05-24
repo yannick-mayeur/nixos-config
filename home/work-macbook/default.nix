@@ -32,6 +32,7 @@
 
     OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
+    eval "$(${lib.getExe pkgs.direnv} hook zsh)"
     eval "$(zoxide init zsh)"
 
     [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
