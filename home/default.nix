@@ -69,7 +69,7 @@ in
           set -g @catppuccin_window_default_text "#W"
           set -g @catppuccin_window_current_text "#W"
 
-          set -g @catppuccin_status_modules_right "directory date_time"
+          set -g @catppuccin_status_modules_right "directory user host date_time"
           set -g @catppuccin_status_left_separator  " "
           set -g @catppuccin_status_right_separator ""
           set -g @catppuccin_status_fill "icon"
@@ -154,6 +154,7 @@ in
     ];
 
     extraPackages = with pkgs; [
+      nodejs_21
       nodePackages.typescript
       nodePackages.typescript-language-server
       unstable.rubyPackages_3_2.solargraph

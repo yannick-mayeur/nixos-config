@@ -45,6 +45,9 @@
           system = "x86_64-linux";
 
           modules = [
+            ({ config, pkgs, ... }: {
+              nixpkgs.overlays = [ overlay-unstable overlay-tmux-catppuccin ];
+            })
             ./hosts/desktop/default.nix
             home-manager.nixosModules.home-manager
             {
@@ -60,6 +63,9 @@
 
           modules = [
             nixos-hardware.nixosModules.hardkernel-odroid-h3
+            ({ config, pkgs, ... }: {
+              nixpkgs.overlays = [ overlay-unstable overlay-tmux-catppuccin ];
+            })
             ./hosts/server/default.nix
             home-manager.nixosModules.home-manager
             {
