@@ -112,6 +112,9 @@
     tailscale
     wget
     zsh
+    firefox
+    ffmpeg
+    openai-whisper
   ];
 
   programs.steam = {
