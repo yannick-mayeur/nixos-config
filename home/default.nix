@@ -1,4 +1,4 @@
-{ config, pkgs, harpoon, bat-catppuccin, ... }:
+{ lib, config, pkgs, harpoon, bat-catppuccin, ... }:
 
 let
   harpoon2 = pkgs.vimUtils.buildVimPlugin {
