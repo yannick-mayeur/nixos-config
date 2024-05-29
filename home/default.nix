@@ -158,6 +158,8 @@ in
       undotree
 
       vim-rails
+
+      bigfile-nvim
     ];
 
     extraPackages = with pkgs; [
