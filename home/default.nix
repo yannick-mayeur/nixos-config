@@ -150,6 +150,7 @@ in
       telescope-nvim
       telescope-fzf-native-nvim
       vim-fugitive
+      vim-rhubarb
 
       plenary-nvim
       harpoon2
