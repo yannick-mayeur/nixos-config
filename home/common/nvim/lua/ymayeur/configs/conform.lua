@@ -1,5 +1,6 @@
 require("conform").setup({
   formatters_by_ft = {
+    graphql = { "prettier" },
     javascript = { "prettier", "eslint_d" },
     typescript = { "prettier", "eslint_d" },
     typescriptreact = { "prettier", "eslint_d" },
