@@ -19,7 +19,7 @@
   programs.zsh.initExtra = lib.mkForce ''
     alias ls='lsd'
 
-    source ~/Repos/sweep/sweep
+    source ~/Repos/sweep-nix-wrapper/sweep/sweep
 
     OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
