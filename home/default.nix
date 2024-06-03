@@ -128,6 +128,7 @@ in
       catppuccin-nvim
 
       nvim-cmp
+      cmp-path
 
       nvim-treesitter.withAllGrammars
       comment-nvim
