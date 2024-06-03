@@ -3,15 +3,17 @@
 {
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud28;
+    package = pkgs.nextcloud29;
     hostName = "localhost";
     https = true;
     database.createLocally = true;
     configureRedis = true;
+    settings = {
+      trusted_domains = [ "localhost" "nextcloud.yannickm.fr" ];
+      trusted_proxies = [ "127.0.0.1" ];
+    };
     config = {
       dbtype = "pgsql";
-      extraTrustedDomains = [ "localhost" "nextcloud.yannickm.fr" ];
-      trustedProxies = [ "localhost" ];
       adminpassFile = "/etc/nixos-secrets/nextcloud-admin-password";
     };
 

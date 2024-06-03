@@ -161,7 +161,7 @@ in
     ];
 
     extraPackages = with pkgs; [
-      nodejs_21
+      nodejs_22
       nodePackages.typescript
       nodePackages.typescript-language-server
       rubyPackages_3_2.solargraph

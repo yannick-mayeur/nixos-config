@@ -4,8 +4,9 @@
   services.adguardhome = {
     enable = true;
     allowDHCP = true;
+    port = 8080;
+    host = "0.0.0.0";
     settings = {
-      http.address = "0.0.0.0:8080";
       dhcp = {
         enable = true;
         interface_name = "enp1s0";

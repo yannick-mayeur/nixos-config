@@ -39,9 +39,9 @@
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
 
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "fr";
-    xkbVariant = "azerty";
+    variant = "azerty";
   };
 
   console.keyMap = "fr";
