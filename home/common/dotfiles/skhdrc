@@ -66,3 +66,4 @@ cmd + lalt - r : yabai -m window --scratchpad recover
 
 # toggle scratchpad windows or launch application if not running
 cmd + lalt - s : yabai -m window --toggle spotify || open  -a Spotify
+cmd + lalt - t : yabai -m window --toggle telegram || open  -a Telegram

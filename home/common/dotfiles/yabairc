@@ -23,3 +23,4 @@ yabai -m config window_topmost on
 # yabairc
 # mark window as scratchpad using rule and set size (scratchpad windows are manage=off automatically)
 yabai -m rule --add app="^Spotify$" scratchpad=spotify grid=11:11:1:1:9:9
+yabai -m rule --add app="^Telegram$" scratchpad=telegram grid=11:11:1:1:9:9
