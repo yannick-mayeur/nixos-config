@@ -88,7 +88,8 @@
 
       eval "$(${lib.getExe pkgs.direnv} hook zsh)"
       eval "$(zoxide init zsh)"
-    '';
+    ''
+    ;
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "thefuck" ];

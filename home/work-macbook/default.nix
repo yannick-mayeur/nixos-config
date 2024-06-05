@@ -16,17 +16,8 @@
 
   home.packages = with pkgs; [ ];
 
-  programs.zsh.initExtra = lib.mkForce ''
-    alias ls='lsd'
-
+  programs.zsh.initExtra = lib.mkAfter ''
     source ~/Repos/sweep-nix-wrapper/sweep/sweep
-
-    OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
-
-    eval "$(${lib.getExe pkgs.direnv} hook zsh)"
-    eval "$(zoxide init zsh)"
-
-    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
   '';
 
   home.file = {
