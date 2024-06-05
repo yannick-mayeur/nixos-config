@@ -1,4 +1,4 @@
-{ config, pkgs, harpoon, bat-catppuccin, ... }:
+{ config, pkgs, bat-catppuccin, ... }:
 
 {
   imports = [

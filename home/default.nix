@@ -1,11 +1,5 @@
-{ lib, config, pkgs, harpoon, bat-catppuccin, ... }:
+{ lib, config, pkgs, bat-catppuccin, ... }:
 
-let
-  harpoon2 = pkgs.vimUtils.buildVimPlugin {
-    name = "harpoon";
-    src = harpoon;
-  };
-in
 {
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -61,7 +55,7 @@ in
     '';
     plugins = with pkgs; [
       {
-        plugin = tmux-catppuccin.tmuxPlugins.catppuccin;
+        plugin = tmuxPlugins.catppuccin;
         extraConfig = ''
           set -g @catppuccin_flavour 'frappe'
 
