@@ -94,6 +94,11 @@ in
   # Configure console keymap
   console.keyMap = "fr";
 
+  catppuccin = {
+    enable = true;
+    flavor = "frappe";
+  };
+
   users.groups.martyflix = { };
   users.users.yannick = {
     isNormalUser = true;

@@ -1,6 +1,11 @@
-{ lib, config, pkgs, bat-catppuccin, ... }:
+{ lib, config, pkgs, ... }:
 
 {
+  catppuccin = {
+    enable = true;
+    flavor = "frappe";
+  };
+
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
@@ -30,15 +35,6 @@
 
   programs.bat = {
     enable = true;
-    config = {
-      theme = "catppuccin";
-    };
-    themes = {
-      catppuccin = {
-        src = bat-catppuccin;
-        file = "themes/Catppuccin Frappe.tmTheme";
-      };
-    };
   };
 
   programs.tmux = {
@@ -53,32 +49,27 @@
       set-option -sa terminal-features ',xterm-256color:RGB'
       bind C-b select-window -l
     '';
-    plugins = with pkgs; [
-      {
-        plugin = tmuxPlugins.catppuccin;
-        extraConfig = ''
-          set -g @catppuccin_flavour 'frappe'
+    catppuccin.extraConfig = ''
+      set -g @catppuccin_flavour 'frappe'
 
-          set -g @catppuccin_window_right_separator "█ "
-          set -g @catppuccin_window_number_position "right"
-          set -g @catppuccin_window_middle_separator "  █"
+      set -g @catppuccin_window_right_separator "█ "
+      set -g @catppuccin_window_number_position "right"
+      set -g @catppuccin_window_middle_separator "  █"
 
-          set -g @catppuccin_window_default_fill "number"
+      set -g @catppuccin_window_default_fill "number"
 
-          set -g @catppuccin_window_current_fill "number"
-          set -g @catppuccin_window_default_text "#W"
-          set -g @catppuccin_window_current_text "#W"
+      set -g @catppuccin_window_current_fill "number"
+      set -g @catppuccin_window_default_text "#W"
+      set -g @catppuccin_window_current_text "#W"
 
-          set -g @catppuccin_status_modules_right "directory user host date_time"
-          set -g @catppuccin_status_left_separator  " "
-          set -g @catppuccin_status_right_separator ""
-          set -g @catppuccin_status_fill "icon"
-          set -g @catppuccin_status_connect_separator "no"
+      set -g @catppuccin_status_modules_right "directory user host date_time"
+      set -g @catppuccin_status_left_separator  " "
+      set -g @catppuccin_status_right_separator ""
+      set -g @catppuccin_status_fill "icon"
+      set -g @catppuccin_status_connect_separator "no"
 
-          set -g @catppuccin_directory_text "#{pane_current_path}"
-        '';
-      }
-    ];
+      set -g @catppuccin_directory_text "#{pane_current_path}"
+    '';
   };
 
   programs.zsh = {
@@ -100,7 +91,6 @@
   programs.helix = {
     enable = true;
     settings = {
-      theme = "gruvbox";
       keys = {
         normal = {
           C-h = "jump_view_left";
@@ -117,6 +107,7 @@
 
   programs.neovim = {
     enable = true;
+    catppuccin.enable = false; # Continue to config this manually
     vimAlias = true;
     plugins = with pkgs.vimPlugins; [
       tokyonight-nvim
@@ -177,6 +168,7 @@
     recursive = true;
   };
 
+  programs.yazi.enable = true;
 
   programs.git = {
     enable = true;

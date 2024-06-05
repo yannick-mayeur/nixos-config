@@ -13,7 +13,7 @@
     home-manager-unstable.url = "github:nix-community/home-manager";
     home-manager-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    bat-catppuccin = { url = "github:catppuccin/bat"; flake = false; };
+    catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs =
@@ -23,7 +23,7 @@
     , nixos-hardware
     , home-manager
     , home-manager-unstable
-    , bat-catppuccin
+    , catppuccin
     , ...
     }@inputs:
     let
@@ -37,6 +37,7 @@
           system = "x86_64-linux";
 
           modules = [
+            catppuccin.nixosModules.catppuccin
             ({ config, pkgs, ... }: {
               nixpkgs.overlays = [ overlay-unstable ];
             })
@@ -45,8 +46,11 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.yannick = import ./home/desktop/default.nix;
-              home-manager.extraSpecialArgs = { inherit bat-catppuccin; };
+              home-manager.users.yannick = import [
+                ./home/desktop/default.nix
+                catppuccin.homeManagerModules.catppuccin
+              ];
+              home-manager.extraSpecialArgs = { };
             }
           ];
         };
@@ -55,6 +59,7 @@
 
           modules = [
             nixos-hardware.nixosModules.hardkernel-odroid-h3
+            catppuccin.nixosModules.catppuccin
             ({ config, pkgs, ... }: {
               nixpkgs.overlays = [ overlay-unstable ];
             })
@@ -63,8 +68,11 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.yannick = import ./home/server/default.nix;
-              home-manager.extraSpecialArgs = { inherit bat-catppuccin; };
+              home-manager.users.yannick = import [
+                ./home/server/default.nix
+                catppuccin.homeManagerModules.catppuccin
+              ];
+              home-manager.extraSpecialArgs = { };
             }
           ];
         };
@@ -80,11 +88,12 @@
             nixpkgs.overlays = [ overlay-unstable ];
           })
           ./home/work-macbook/default.nix
+          catppuccin.homeManagerModules.catppuccin
         ];
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
-        extraSpecialArgs = { inherit bat-catppuccin; };
+        extraSpecialArgs = { };
       };
     };
 }

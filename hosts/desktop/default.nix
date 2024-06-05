@@ -92,6 +92,12 @@
     nvidiaSettings = true;
   };
 
+  catppuccin = {
+    enable = true;
+    flavor = "frappe";
+  };
+
+
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
   ];
