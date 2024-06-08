@@ -1,7 +1,8 @@
-{ lib, ... }:
+{ lib, catppuccin, ... }:
 
 {
   imports = [
+    catppuccin.homeManagerModules.catppuccin
     ../.
   ];
 

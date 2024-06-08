@@ -25,6 +25,38 @@
     ".skhdrc".source = ../common/dotfiles/skhdrc;
   };
 
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      window = {
+        option_as_alt = "OnlyLeft";
+        decorations = "buttonless";
+        padding.x = 5;
+        padding.y = 5;
+      };
+      font = {
+        size = 18;
+        bold = {
+          family = "Hack Nerd Font Mono";
+          style = "Bold";
+        };
+        bold_italic = {
+          family = "Hack Nerd Font Mono";
+          style = "Bold Italic";
+        };
+        italic = {
+          family = "Hack Nerd Font Mono";
+          style = "Italic";
+        };
+        normal = {
+          family = "Hack Nerd Font Mono";
+          style = "Regular";
+        };
+      };
+    };
+  };
+
+
   nixpkgs.config.allowUnfree = true;
 
   # This value determines the Home Manager release that your configuration is

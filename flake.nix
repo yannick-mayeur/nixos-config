@@ -68,11 +68,8 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.yannick = import [
-                ./home/server/default.nix
-                catppuccin.homeManagerModules.catppuccin
-              ];
-              home-manager.extraSpecialArgs = { };
+              home-manager.users.yannick = import ./home/server/default.nix;
+              home-manager.extraSpecialArgs = { inherit catppuccin; };
             }
           ];
         };
