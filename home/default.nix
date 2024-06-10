@@ -154,8 +154,6 @@
       nodejs_22
       nodePackages.typescript
       nodePackages.typescript-language-server
-      rubyPackages_3_2.solargraph
-      rubyPackages_3_2.rubocop
       vscode-langservers-extracted
       lua-language-server
       tree-sitter
