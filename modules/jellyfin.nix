@@ -42,6 +42,7 @@
     containers."media-server_torrent" = {
       image = "haugene/transmission-openvpn";
       volumes = [
+        "/etc/nixos-secrets/protonvpn:/etc/openvpn/custom/"
         "/var/lib/media-server_torrent/config:/config"
         "/mnt/storage/media-server/transmission:/data"
       ];
