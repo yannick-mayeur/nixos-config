@@ -39,19 +39,32 @@
       ports = [ "8191:8191" ];
       autoStart = true;
     };
-    containers."media-server_torrent" = {
-      image = "haugene/transmission-openvpn";
+
+    containers."media-server_qbittorrent" = {
+      image = "lscr.io/linuxserver/qbittorrent:latest";
       volumes = [
-        "/etc/nixos-secrets/protonvpn:/etc/openvpn/custom/"
-        "/var/lib/media-server_torrent/config:/config"
-        "/mnt/storage/media-server/transmission:/data"
+        "/mnt/storage/media-server/qbittorrent:/media-server/qbittorrent"
+        "/var/lib/media-server_qbittorrent/config:/config"
       ];
-      ports = [ "9091:9091" ];
-      environmentFiles = [ "/etc/nixos-secrets/media-server_torrent.env" ];
+      environmentFiles = [ "/etc/nixos-secrets/media-server_qbittorrent.env" ];
+      extraOptions = [
+        "--network=container:gluetun"
+      ];
+      autoStart = true;
+    };
+
+    containers."gluetun" = {
+      image = "qmcgaw/gluetun";
+      volumes = [
+        "/var/lib/gluetun:/gluetun"
+      ];
+      environmentFiles = [ "/etc/nixos-secrets/gluetun.env" ];
       extraOptions = [
         "--cap-add=NET_ADMIN"
       ];
-      autoStart = true;
+      ports = [
+        "8088:8088" # qbittorrent
+      ];
     };
   };
 
@@ -90,17 +103,17 @@
         entrypoints = [ "web" "websecure" ];
         middlewares = [ "authelia" ];
       };
-      torrent-api = {
-        rule = "Host(`torrent-api.yannickm.fr`)";
-        service = "torrent";
+      qbittorrent-api = {
+        rule = "Host(`qbittorrent-api.yannickm.fr`)";
+        service = "qbittorrent";
         entrypoints = [ "web" "websecure" ];
         middlewares = [ "authelia-basic" ];
       };
-      torrent = {
-        rule = "Host(`torrent.yannickm.fr`)";
-        service = "torrent";
+      qbittorrent = {
+        rule = "Host(`qbittorrent.yannickm.fr`)";
+        service = "qbittorrent";
         entrypoints = [ "web" "websecure" ];
-        middlewares = [ "authelia" ];
+        middlewares = [ "authelia" "qb-headers" ];
       };
       flaresolverr = {
         rule = "Host(`flaresolverr.yannickm.fr`)";
@@ -116,7 +129,10 @@
       sonarr.loadBalancer.servers = [{ url = "http://localhost:8989"; }];
       prowlarr.loadBalancer.servers = [{ url = "http://localhost:9696"; }];
       bazarr.loadBalancer.servers = [{ url = "http://localhost:6767"; }];
-      torrent.loadBalancer.servers = [{ url = "http://localhost:9091"; }];
+      qbittorrent.loadBalancer = {
+        servers = [{ url = "http://localhost:8088"; }];
+        passhostheader = false;
+      };
       flaresolverr.loadBalancer.servers = [{ url = "http://localhost:8191"; }];
     };
   };

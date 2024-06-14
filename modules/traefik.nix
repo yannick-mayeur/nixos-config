@@ -50,6 +50,11 @@
               permanent = true;
             };
           };
+          qb-headers.headers.customrequestheaders = {
+            X-Frame-Options = "SAMEORIGIN";
+            Referer = "";
+            Origin = "";
+          };
         };
         routers = {
           traefik = {

@@ -136,6 +136,7 @@ in
     wget
     dig
     openai-whisper
+    jellyfin-ffmpeg
 
     tailscale # added here to have the tailscale command
   ];
