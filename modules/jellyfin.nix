@@ -23,6 +23,23 @@
     group = "martyflix";
   };
 
+  services.readarr = {
+    enable = true;
+    group = "martyflix";
+  };
+
+  users.users.kavita.extraGroups = [ "martyflix" ];
+  services.kavita = {
+    enable = true;
+    tokenKeyFile = /etc/nixos-secrets/kavita_tokenkey_file;
+  };
+
+  services.audiobookshelf = {
+    enable = true;
+    port = 8181;
+    group = "martyflix";
+  };
+
   services.sonarr = {
     enable = true;
     group = "martyflix";
@@ -75,6 +92,16 @@
         service = "jellyfin";
         entrypoints = [ "web" "websecure" ];
       };
+      audiobookshelf = {
+        rule = "Host(`audiobookshelf.yannickm.fr`)";
+        service = "audiobookshelf";
+        entrypoints = [ "web" "websecure" ];
+      };
+      kavita = {
+        rule = "Host(`kavita.yannickm.fr`)";
+        service = "kavita";
+        entrypoints = [ "web" "websecure" ];
+      };
       jellyseerr = {
         rule = "Host(`jellyseerr.yannickm.fr`)";
         service = "jellyseerr";
@@ -89,6 +116,11 @@
       sonarr = {
         rule = "Host(`sonarr.yannickm.fr`)";
         service = "sonarr";
+        entrypoints = [ "web" "websecure" ];
+      };
+      readarr = {
+        rule = "Host(`readarr.yannickm.fr`)";
+        service = "readarr";
         entrypoints = [ "web" "websecure" ];
       };
       prowlarr = {
@@ -124,9 +156,12 @@
     };
     services = {
       jellyfin.loadBalancer.servers = [{ url = "http://localhost:8096"; }];
+      audiobookshelf.loadBalancer.servers = [{ url = "http://localhost:8181"; }];
+      kavita.loadBalancer.servers = [{ url = "http://localhost:5000"; }];
       jellyseerr.loadBalancer.servers = [{ url = "http://localhost:5055"; }];
       radarr.loadBalancer.servers = [{ url = "http://localhost:7878"; }];
       sonarr.loadBalancer.servers = [{ url = "http://localhost:8989"; }];
+      readarr.loadBalancer.servers = [{ url = "http://localhost:8787"; }];
       prowlarr.loadBalancer.servers = [{ url = "http://localhost:9696"; }];
       bazarr.loadBalancer.servers = [{ url = "http://localhost:6767"; }];
       qbittorrent.loadBalancer = {
