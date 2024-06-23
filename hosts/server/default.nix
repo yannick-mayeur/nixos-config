@@ -63,9 +63,46 @@ in
     };
     firewall = {
       enable = true;
+      allowPing = true;
       # 2283/tcp for immich
       allowedTCPPorts = [ 2283 ];
     };
+  };
+
+  services.samba = {
+    enable = true;
+    securityType = "user";
+    openFirewall = true;
+    extraConfig = ''
+      workgroup = WORKGROUP
+      server string = server
+      netbios name = server
+      security = user 
+      #use sendfile = yes
+      #max protocol = smb2
+      # note: localhost is the ipv6 localhost ::1
+      hosts allow = 192.168.1. 127.0.0.1 localhost
+      hosts deny = 0.0.0.0/0
+      guest account = nobody
+      map to guest = bad user
+    '';
+    shares = {
+      media = {
+        path = "/mnt/storage/media-server/media";
+        browseable = "yes";
+        "read only" = "no";
+        "guest ok" = "no";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force user" = "yannick";
+        "force group" = "users";
+      };
+    };
+  };
+
+  services.samba-wsdd = {
+    enable = true;
+    openFirewall = true;
   };
 
   time.timeZone = "Europe/Paris";
