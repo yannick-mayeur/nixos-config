@@ -58,7 +58,7 @@
     };
 
     containers."media-server_qbittorrent" = {
-      image = "lscr.io/linuxserver/qbittorrent:latest";
+      image = "lscr.io/linuxserver/qbittorrent:4.5.5";
       volumes = [
         "/mnt/storage/media-server/qbittorrent:/media-server/qbittorrent"
         "/var/lib/media-server_qbittorrent/config:/config"
