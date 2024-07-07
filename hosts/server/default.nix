@@ -27,18 +27,43 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  fileSystems."/mnt/storage" =
+  fileSystems."/mnt/disk1" =
     {
       device = "/dev/disk/by-uuid/a2c97b53-e421-4db7-a424-c57356e1e14c";
       fsType = "ext4";
+    };
+
+  fileSystems."/mnt/disk2" =
+    {
+      device = "/dev/disk/by-uuid/712168ad-d431-4908-9c6b-08692abaabe7";
+      fsType = "ext4";
+    };
+
+  fileSystems."/mnt/storage" =
+    {
+      fsType = "fuse.mergerfs";
+      device = "/mnt/disk*";
+      options = [
+        "category.create=mfs"
+        "fsname=mergerfs"
+      ];
     };
 
   systemd.tmpfiles.rules =
     [
       # Set the permissions and the martyflix group to folders used by *arr apps
       "d /mnt/storage/media-server 0770 - martyflix - -"
+
       "d /mnt/storage/media-server/media/movies 0770 - martyflix - -"
       "d /mnt/storage/media-server/media/tv_shows 0770 - martyflix - -"
+      "d /mnt/storage/media-server/media/music 0770 - martyflix - -"
+      "d /mnt/storage/media-server/media/books 0770 - martyflix - -"
+
+      "d /mnt/storage/media-server/qbittorrent/movies 0770 - martyflix - -"
+      "d /mnt/storage/media-server/qbittorrent/tv_shows 0770 - martyflix - -"
+      "d /mnt/storage/media-server/qbittorrent/music 0770 - martyflix - -"
+      "d /mnt/storage/media-server/qbittorrent/books 0770 - martyflix - -"
+
       "Z /mnt/storage/media-server 0770 - martyflix - -"
     ];
 
@@ -163,6 +188,8 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    mergerfs
+
     git # Should be kept as it is used by flakes
     htop
     bat
