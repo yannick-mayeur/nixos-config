@@ -71,7 +71,7 @@
     };
 
     containers."gluetun" = {
-      image = "qmcgaw/gluetun";
+      image = "qmcgaw/gluetun:v3";
       volumes = [
         "/var/lib/gluetun:/gluetun"
       ];
