@@ -11,6 +11,18 @@
       "render"
     ];
 
+  users.users.kavita.extraGroups = [ "martyflix" ];
+  services.kavita = {
+    enable = true;
+    tokenKeyFile = /etc/nixos-secrets/kavita_tokenkey_file;
+  };
+
+  services.audiobookshelf = {
+    enable = true;
+    port = 8181;
+    group = "martyflix";
+  };
+
   services.jellyseerr = {
     enable = true;
     port = 5055;
@@ -25,18 +37,6 @@
 
   services.readarr = {
     enable = true;
-    group = "martyflix";
-  };
-
-  users.users.kavita.extraGroups = [ "martyflix" ];
-  services.kavita = {
-    enable = true;
-    tokenKeyFile = /etc/nixos-secrets/kavita_tokenkey_file;
-  };
-
-  services.audiobookshelf = {
-    enable = true;
-    port = 8181;
     group = "martyflix";
   };
 
@@ -55,6 +55,22 @@
       image = "flaresolverr/flaresolverr";
       ports = [ "8191:8191" ];
       autoStart = true;
+    };
+
+    containers."autobrr" = {
+      image = "ghcr.io/autobrr/autobrr:latest";
+      autoStart = true;
+      environment = {
+        TZ = "Europe/Paris";
+        PUID = "1000";
+        PGID = "992";
+      };
+      volumes = [
+        "/var/lib/autobrr/config:/config"
+      ];
+      ports = [
+        "7474:7474"
+      ];
     };
 
     containers."media-server_qbittorrent" = {
@@ -135,6 +151,12 @@
         entrypoints = [ "web" "websecure" ];
         middlewares = [ "authelia" ];
       };
+      autobrr = {
+        rule = "Host(`autobrr.yannickm.fr`)";
+        service = "autobrr";
+        entrypoints = [ "web" "websecure" ];
+        middlewares = [ "authelia" ];
+      };
       qbittorrent-api = {
         rule = "Host(`qbittorrent-api.yannickm.fr`)";
         service = "qbittorrent";
@@ -164,6 +186,7 @@
       readarr.loadBalancer.servers = [{ url = "http://localhost:8787"; }];
       prowlarr.loadBalancer.servers = [{ url = "http://localhost:9696"; }];
       bazarr.loadBalancer.servers = [{ url = "http://localhost:6767"; }];
+      autobrr.loadBalancer.servers = [{ url = "http://localhost:7474"; }];
       qbittorrent.loadBalancer = {
         servers = [{ url = "http://localhost:8088"; }];
         passhostheader = false;
