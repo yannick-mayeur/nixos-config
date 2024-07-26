@@ -11,8 +11,8 @@
       access_control = {
         default_policy = "deny";
         rules = [
-          { domain = "prowlarr.yannickm.fr"; resources = [ "^/[0-9]?/download([/?].*)?$" ]; policy = "bypass"; }
-          { domain = "*.yannickm.fr"; resources = [ "^(/[0-9])?/api([/?].*)?$" ]; policy = "bypass"; }
+          { domain = "prowlarr.yannickm.fr"; resources = [ "^/[0-9]*/download([/?].*)?$" ]; policy = "bypass"; }
+          { domain = "*.yannickm.fr"; resources = [ "^(/[0-9]*)?/api([/?].*)?$" ]; policy = "bypass"; }
           { domain = "*.yannickm.fr"; policy = "one_factor"; }
         ];
       };
