@@ -39,6 +39,12 @@ in
       fsType = "ext4";
     };
 
+  fileSystems."/mnt/parity1" =
+    {
+      device = "/dev/disk/by-uuid/927c04ae-8633-40cd-b474-0adfa60f31d8";
+      fsType = "ext4";
+    };
+
   fileSystems."/mnt/storage" =
     {
       fsType = "fuse.mergerfs";
@@ -48,6 +54,26 @@ in
         "fsname=mergerfs"
       ];
     };
+
+  services.snapraid = {
+    enable = true;
+    parityFiles = [
+      "/mnt/parity1/snapraid.parity"
+    ];
+    contentFiles = [
+      "/mnt/disk1/snapraid.content"
+      "/mnt/disk2/snapraid.content"
+      "/var/snapraid/snapraid.content"
+    ];
+    dataDisks = {
+      disk1 = "/mnt/disk1";
+      disk2 = "/mnt/disk2";
+    };
+    exclude = [
+      "/Backups/"
+      "lost+found/"
+    ];
+  };
 
   systemd.tmpfiles.rules =
     [
