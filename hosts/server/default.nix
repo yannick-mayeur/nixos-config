@@ -269,7 +269,7 @@ in
   services.restic.backups = {
     system-local = {
       initialize = true;
-      repository = "/mnt/storage/Backups/restic/server";
+      repository = "/mnt/disk1/Backups/restic/server";
       paths = [
         "/home"
         "/etc/group"
